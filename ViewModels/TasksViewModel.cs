@@ -3,6 +3,7 @@ using System.Collections.Specialized;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using TaskManager.Models;
+using TaskManager.Services;
 using TaskManager.Views;
 
 namespace TaskManager.ViewModels;
@@ -19,7 +20,9 @@ public partial class TasksViewModel : ObservableObject
 {
     public IReadOnlyList<TaskCategory> Categories { get; } = Enum.GetValues<TaskCategory>();
 
-    public ObservableCollection<Tache> ToutesLesTaches { get; } = new();
+    private readonly TasksRepository _repo;
+
+    public ObservableCollection<Tache> ToutesLesTaches => _repo.Taches;
 
     [ObservableProperty]
     private ObservableCollection<Tache> _tachesVisibles = new();
@@ -27,6 +30,9 @@ public partial class TasksViewModel : ObservableObject
     [ObservableProperty]
     [NotifyCanExecuteChangedFor(nameof(AjouterCommand))]
     private string _nouveauTitre = string.Empty;
+
+    [ObservableProperty]
+    private string _nouvelleDescription = string.Empty;
 
     [ObservableProperty]
     private TaskCategory _nouvelleCategorie = TaskCategory.Travail;
@@ -44,29 +50,14 @@ public partial class TasksViewModel : ObservableObject
             _ => $"TaskManager — {NombreTachesRestantes} restantes"
         };
 
-    public TasksViewModel()
+    public TasksViewModel(TasksRepository repo)
     {
+        _repo = repo;
         ToutesLesTaches.CollectionChanged += ToutesLesTaches_CollectionChanged;
 
-        Seed();
         AppliquerFiltre();
         OnPropertyChanged(nameof(NombreTachesRestantes));
         OnPropertyChanged(nameof(TitrePage));
-    }
-
-    private void Seed()
-    {
-        AjouterTacheSeed("Lire le module 3", TaskCategory.Etudes);
-        AjouterTacheSeed("Faire le devoir TaskManager", TaskCategory.Etudes);
-        AjouterTacheSeed("Préparer la réunion", TaskCategory.Travail);
-        AjouterTacheSeed("Acheter du lait", TaskCategory.Personnel);
-    }
-
-    private void AjouterTacheSeed(string titre, TaskCategory categorie)
-    {
-        var t = new Tache { Titre = titre, Categorie = categorie, EstFaite = false };
-        HookTache(t);
-        ToutesLesTaches.Add(t);
     }
 
     private void ToutesLesTaches_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
@@ -109,11 +100,13 @@ public partial class TasksViewModel : ObservableObject
         {
             Titre = NouveauTitre.Trim(),
             Categorie = NouvelleCategorie,
+            Description = (NouvelleDescription ?? string.Empty).Trim(),
             EstFaite = false
         };
 
         ToutesLesTaches.Add(t);
         NouveauTitre = string.Empty;
+        NouvelleDescription = string.Empty;
         NouvelleCategorie = TaskCategory.Travail;
     }
 

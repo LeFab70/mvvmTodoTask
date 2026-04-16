@@ -10,6 +10,9 @@ public partial class Tache : ObservableObject
     private string _titre = string.Empty;
 
     [ObservableProperty]
+    private string _description = string.Empty;
+
+    [ObservableProperty]
     private TaskCategory _categorie = TaskCategory.Travail;
 
     [ObservableProperty]

@@ -32,6 +32,11 @@
                         Text="{Binding Tache.DateCreation, StringFormat='Créée le {0:dd MMM yyyy — HH:mm}'}"
                         FontSize="12"
                         TextColor="{AppThemeBinding Light=#64748B, Dark=#94A3B8}" />
+
+                    <Label
+                        Text="{Binding Tache.Description}"
+                        FontSize="14"
+                        TextColor="{AppThemeBinding Light=#334155, Dark=#CBD5E1}" />
                 </VerticalStackLayout>
             </Border>
 

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="TaskManager.Views.AddTaskPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Ajouter">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="16" Spacing="14">
+            <Border StrokeThickness="0" BackgroundColor="{AppThemeBinding Light=#F8FAFC, Dark=#0B1220}">
+                <VerticalStackLayout Padding="16" Spacing="12">
+                    <Label Text="Nouvelle tâche" FontAttributes="Bold" FontSize="18" />
+
+                    <Entry
+                        Placeholder="Titre"
+                        Text="{Binding Titre, Mode=TwoWay}"
+                        ReturnCommand="{Binding AjouterCommand}" />
+
+                    <Picker
+                        Title="Catégorie"
+                        ItemsSource="{Binding Categories}"
+                        SelectedItem="{Binding Categorie, Mode=TwoWay}" />
+
+                    <Editor
+                        Placeholder="Description"
+                        AutoSize="TextChanges"
+                        MinimumHeightRequest="120"
+                        Text="{Binding Description, Mode=TwoWay}" />
+
+                    <Button Text="Ajouter la tâche" Command="{Binding AjouterCommand}" />
+                </VerticalStackLayout>
+            </Border>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
+

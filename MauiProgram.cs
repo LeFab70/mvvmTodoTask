@@ -1,4 +1,5 @@
 using Microsoft.Extensions.Logging;
+using TaskManager.Services;
 using TaskManager.ViewModels;
 using TaskManager.Views;
 
@@ -22,10 +23,13 @@ public static class MauiProgram
 #endif
 
 		builder.Services.AddSingleton<AppShell>();
+		builder.Services.AddSingleton<TasksRepository>();
 		builder.Services.AddTransient<TasksViewModel>();
 		builder.Services.AddTransient<TaskDetailViewModel>();
+		builder.Services.AddTransient<AddTaskViewModel>();
 		builder.Services.AddTransient<TasksPage>();
 		builder.Services.AddTransient<TaskDetailPage>();
+		builder.Services.AddTransient<AddTaskPage>();
 
 		return builder.Build();
 	}
