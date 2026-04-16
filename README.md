@@ -4,15 +4,7 @@
 
 Application **.NET MAUI** de gestion de tâches réalisée en **MVVM** avec **CommunityToolkit.Mvvm**, sans logique dans le code-behind (hors affectation du `BindingContext`).
 
-## Alignement avec la grille (colonne « Excellent » 8–10)
 
-| Critère | Ce que le projet respecte |
-| --- | --- |
-| **Architecture MVVM** | ViewModels en `partial` + `ObservableObject`, commandes `[RelayCommand]`, logique hors des `.xaml.cs` (code-behind limité à `InitializeComponent` + `BindingContext`). |
-| **Binding et commands** | Bindings `TwoWay` sur les saisies, `CanExecute` sur l’ajout (`AjouterCommand`), liste avec **`ObservableCollection<Tache>`** (via `TasksRepository`). |
-| **Filtrage** | Filtres par catégorie (Toutes / Travail / Personnel / Études), liste visible mise à jour en temps réel. |
-| **Qualité du code** | Dossiers `Models/`, `ViewModels/`, `Views/`, `Services/`, noms explicites, namespaces cohérents. |
-| **Design et UX** | Cartes avec ombre, tâche terminée visuellement distincte (barré / grisé), compteurs **restantes** et **faites** fonctionnels et cohérents avec le filtre actif. |
 
 ## Fonctionnalités
 
