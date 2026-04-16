@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="TaskManager.Views.TaskDetailPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:conv="clr-namespace:TaskManager.Converters"
+    xmlns:model="clr-namespace:TaskManager.Models"
+    Title="Détail">
+
+    <ContentPage.Resources>
+        <conv:CategoryToColorConverter x:Key="CategoryToColorConverter" />
+    </ContentPage.Resources>
+
+    <ScrollView>
+        <VerticalStackLayout Padding="16" Spacing="14">
+            <Border StrokeThickness="0" BackgroundColor="{AppThemeBinding Light=#F8FAFC, Dark=#0B1220}">
+                <VerticalStackLayout Padding="16" Spacing="10">
+                    <Label Text="{Binding Tache.Titre}" FontSize="22" FontAttributes="Bold" />
+
+                    <Border
+                        Padding="10,4"
+                        StrokeThickness="0"
+                        BackgroundColor="{Binding Tache.Categorie, Converter={StaticResource CategoryToColorConverter}}"
+                        HorizontalOptions="Start">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="999" />
+                        </Border.StrokeShape>
+                        <Label Text="{Binding Tache.Categorie}" TextColor="White" FontAttributes="Bold" />
+                    </Border>
+
+                    <Label
+                        Text="{Binding Tache.DateCreation, StringFormat='Créée le {0:dd MMM yyyy — HH:mm}'}"
+                        FontSize="12"
+                        TextColor="{AppThemeBinding Light=#64748B, Dark=#94A3B8}" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Border StrokeThickness="0" BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#0F172A}">
+                <Grid Padding="16" ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto" RowSpacing="8">
+                    <Label Grid.Row="0" Grid.Column="0" Text="Terminée" FontAttributes="Bold" />
+                    <Switch Grid.Row="0" Grid.Column="1" IsToggled="{Binding Tache.EstFaite, Mode=TwoWay}" />
+
+                    <Label
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="2"
+                        Text="{Binding Tache.EstFaite, StringFormat='État actuel : {0}'}"
+                        FontSize="12"
+                        TextColor="{AppThemeBinding Light=#64748B, Dark=#94A3B8}" />
+                </Grid>
+            </Border>
+
+            <Label
+                Text="Astuce : reviens à la liste pour supprimer (swipe)."
+                FontSize="12"
+                TextColor="{AppThemeBinding Light=#64748B, Dark=#94A3B8}" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
+
