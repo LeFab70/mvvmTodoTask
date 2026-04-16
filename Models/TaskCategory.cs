@@ -1,5 +1,6 @@
 namespace TaskManager.Models;
 
+//les enum sont des types qui permettent de définir un ensemble de valeurs constantes
 public enum TaskCategory
 {
     Travail = 0,
