@@ -14,45 +14,27 @@
         <conv:FilterToButtonTextColorConverter x:Key="FilterToButtonTextColorConverter" />
     </ContentPage.Resources>
 
-    <Grid RowDefinitions="Auto,Auto,*" Padding="16" RowSpacing="14">
-        <!-- Ajout -->
-        <Border Grid.Row="0" StrokeThickness="0" BackgroundColor="{AppThemeBinding Light=#F8FAFC, Dark=#0B1220}">
-            <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto" ColumnSpacing="12" RowSpacing="10" Padding="14">
-                <Entry
-                    Grid.Row="0"
-                    Grid.Column="0"
-                    Placeholder="Titre de la tâche…"
-                    Text="{Binding NouveauTitre, Mode=TwoWay}"
-                    ReturnCommand="{Binding AjouterCommand}" />
+    <Grid RowDefinitions="Auto,*" Padding="16" RowSpacing="14">
+        <Grid Grid.Row="0" ColumnDefinitions="*,Auto" ColumnSpacing="12">
+            <Label
+                Grid.Column="0"
+                Text="Mes tâches"
+                FontSize="22"
+                FontAttributes="Bold"
+                VerticalTextAlignment="Center" />
+            <Label
+                Grid.Column="1"
+                VerticalTextAlignment="Center"
+                Text="{Binding NombreTachesRestantes, StringFormat='{0} restante(s)'}"
+                TextColor="{AppThemeBinding Light=#334155, Dark=#94A3B8}"
+                FontSize="12" />
+        </Grid>
 
-                <Button
-                    Grid.Row="0"
-                    Grid.Column="1"
-                    Text="Ajouter"
-                    Command="{Binding AjouterCommand}" />
-
-                <Picker
-                    Grid.Row="1"
-                    Grid.Column="0"
-                    Title="Catégorie"
-                    ItemsSource="{Binding Categories}"
-                    SelectedItem="{Binding NouvelleCategorie, Mode=TwoWay}" />
-
-                <Label
-                    Grid.Row="1"
-                    Grid.Column="1"
-                    VerticalTextAlignment="Center"
-                    Text="{Binding NombreTachesRestantes, StringFormat='{0} restante(s)'}"
-                    TextColor="{AppThemeBinding Light=#334155, Dark=#94A3B8}"
-                    FontSize="12" />
-            </Grid>
-        </Border>
-
-        <!-- Filtres -->
-        <Grid Grid.Row="1" ColumnDefinitions="*,*,*,*" ColumnSpacing="10">
+        <VerticalStackLayout Grid.Row="1" Spacing="12">
+            <Grid ColumnDefinitions="*,*,*,*" ColumnSpacing="10">
             <Button
                 Grid.Column="0"
-                Text="Toutes"
+                Text="📋 Toutes"
                 CornerRadius="999"
                 Padding="12,10"
                 BackgroundColor="{Binding FiltreActif, Converter={StaticResource FilterToButtonColorsConverter}, ConverterParameter=Toutes}"
@@ -62,7 +44,7 @@
 
             <Button
                 Grid.Column="1"
-                Text="Travail"
+                Text="💼 Travail"
                 CornerRadius="999"
                 Padding="12,10"
                 BackgroundColor="{Binding FiltreActif, Converter={StaticResource FilterToButtonColorsConverter}, ConverterParameter=Travail}"
@@ -72,7 +54,7 @@
 
             <Button
                 Grid.Column="2"
-                Text="Personnel"
+                Text="🏠 Personnel"
                 CornerRadius="999"
                 Padding="12,10"
                 BackgroundColor="{Binding FiltreActif, Converter={StaticResource FilterToButtonColorsConverter}, ConverterParameter=Personnel}"
@@ -82,24 +64,22 @@
 
             <Button
                 Grid.Column="3"
-                Text="Études"
+                Text="🎓 Études"
                 CornerRadius="999"
                 Padding="12,10"
                 BackgroundColor="{Binding FiltreActif, Converter={StaticResource FilterToButtonColorsConverter}, ConverterParameter=Etudes}"
                 TextColor="{Binding FiltreActif, Converter={StaticResource FilterToButtonTextColorConverter}, ConverterParameter=Etudes}"
                 Command="{Binding FiltrerCommand}"
                 CommandParameter="{x:Static vm:TaskCategoryFilter.Etudes}" />
-        </Grid>
+            </Grid>
 
-        <!-- Liste -->
-        <CollectionView
-            Grid.Row="2"
-            ItemsSource="{Binding TachesVisibles}"
-            SelectionMode="None">
+            <CollectionView
+                ItemsSource="{Binding TachesVisibles}"
+                SelectionMode="None">
             <CollectionView.EmptyView>
                 <VerticalStackLayout Padding="30" Spacing="8" HorizontalOptions="Center" VerticalOptions="Center">
                     <Label Text="Aucune tâche dans ce filtre." FontAttributes="Bold" HorizontalTextAlignment="Center" />
-                    <Label Text="Ajoute une tâche au-dessus pour commencer." FontSize="12" TextColor="{AppThemeBinding Light=#64748B, Dark=#94A3B8}" HorizontalTextAlignment="Center" />
+                    <Label Text="Utilise l’onglet “Ajouter” pour créer une tâche." FontSize="12" TextColor="{AppThemeBinding Light=#64748B, Dark=#94A3B8}" HorizontalTextAlignment="Center" />
                 </VerticalStackLayout>
             </CollectionView.EmptyView>
 
@@ -116,7 +96,10 @@
                             </SwipeItems>
                         </SwipeView.RightItems>
 
-                        <Border StrokeThickness="0" BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#0F172A}" Margin="0,0,0,10">
+                        <Border StrokeThickness="0" BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#0F172A}" Margin="0,0,0,12">
+                            <Border.Shadow>
+                                <Shadow Brush="#000000" Radius="18" Opacity="0.10" Offset="0,8" />
+                            </Border.Shadow>
                             <Border.Triggers>
                                 <DataTrigger TargetType="Border" Binding="{Binding EstFaite}" Value="True">
                                     <Setter Property="Opacity" Value="0.7" />
@@ -137,6 +120,13 @@
                                             </DataTrigger>
                                         </Label.Triggers>
                                     </Label>
+
+                                    <Label
+                                        Text="{Binding Description}"
+                                        FontSize="12"
+                                        LineBreakMode="TailTruncation"
+                                        MaxLines="2"
+                                        TextColor="{AppThemeBinding Light=#64748B, Dark=#94A3B8}" />
 
                                     <Border
                                         Padding="8,3"
@@ -172,7 +162,8 @@
                     </SwipeView>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
-        </CollectionView>
+            </CollectionView>
+        </VerticalStackLayout>
     </Grid>
 </ContentPage>
 

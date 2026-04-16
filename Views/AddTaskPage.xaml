@@ -11,21 +11,48 @@
                 <VerticalStackLayout Padding="16" Spacing="12">
                     <Label Text="Nouvelle tâche" FontAttributes="Bold" FontSize="18" />
 
-                    <Entry
-                        Placeholder="Titre"
-                        Text="{Binding Titre, Mode=TwoWay}"
-                        ReturnCommand="{Binding AjouterCommand}" />
+                    <Border
+                        Stroke="{AppThemeBinding Light=#CBD5E1, Dark=#334155}"
+                        StrokeThickness="1"
+                        BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#0F172A}"
+                        Padding="12,10">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="12" />
+                        </Border.StrokeShape>
+                        <Entry
+                            Placeholder="Titre"
+                            Text="{Binding Titre, Mode=TwoWay}"
+                            ReturnCommand="{Binding AjouterCommand}" />
+                    </Border>
 
-                    <Picker
-                        Title="Catégorie"
-                        ItemsSource="{Binding Categories}"
-                        SelectedItem="{Binding Categorie, Mode=TwoWay}" />
+                    <Border
+                        Stroke="{AppThemeBinding Light=#CBD5E1, Dark=#334155}"
+                        StrokeThickness="1"
+                        BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#0F172A}"
+                        Padding="12,2">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="12" />
+                        </Border.StrokeShape>
+                        <Picker
+                            Title="Catégorie"
+                            ItemsSource="{Binding Categories}"
+                            SelectedItem="{Binding Categorie, Mode=TwoWay}" />
+                    </Border>
 
-                    <Editor
-                        Placeholder="Description"
-                        AutoSize="TextChanges"
-                        MinimumHeightRequest="120"
-                        Text="{Binding Description, Mode=TwoWay}" />
+                    <Border
+                        Stroke="{AppThemeBinding Light=#CBD5E1, Dark=#334155}"
+                        StrokeThickness="1"
+                        BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#0F172A}"
+                        Padding="12,10">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="12" />
+                        </Border.StrokeShape>
+                        <Editor
+                            Placeholder="Description"
+                            AutoSize="TextChanges"
+                            MinimumHeightRequest="140"
+                            Text="{Binding Description, Mode=TwoWay}" />
+                    </Border>
 
                     <Button Text="Ajouter la tâche" Command="{Binding AjouterCommand}" />
                 </VerticalStackLayout>
