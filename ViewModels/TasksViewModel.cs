@@ -40,7 +40,11 @@ public partial class TasksViewModel : ObservableObject
     [ObservableProperty]
     private TaskCategoryFilter _filtreActif = TaskCategoryFilter.Toutes;
 
-    public int NombreTachesRestantes => ToutesLesTaches.Count(t => !t.EstFaite);
+    public int TotalTachesVisibles => TachesVisibles.Count;
+
+    public int NombreTachesRestantes => TachesVisibles.Count(t => !t.EstFaite);
+
+    public int NombreTachesFaites => TachesVisibles.Count(t => t.EstFaite);
 
     public string TitrePage =>
         NombreTachesRestantes switch
@@ -55,9 +59,11 @@ public partial class TasksViewModel : ObservableObject
         _repo = repo;
         ToutesLesTaches.CollectionChanged += ToutesLesTaches_CollectionChanged;
 
+        foreach (var t in ToutesLesTaches)
+            HookTache(t);
+
         AppliquerFiltre();
-        OnPropertyChanged(nameof(NombreTachesRestantes));
-        OnPropertyChanged(nameof(TitrePage));
+        RafraichirCompteurs();
     }
 
     private void ToutesLesTaches_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
@@ -75,8 +81,7 @@ public partial class TasksViewModel : ObservableObject
         }
 
         AppliquerFiltre();
-        OnPropertyChanged(nameof(NombreTachesRestantes));
-        OnPropertyChanged(nameof(TitrePage));
+        RafraichirCompteurs();
     }
 
     private void HookTache(Tache tache) => tache.PropertyChanged += Tache_PropertyChanged;
@@ -88,8 +93,7 @@ public partial class TasksViewModel : ObservableObject
         if (e.PropertyName is nameof(Tache.EstFaite) or nameof(Tache.Categorie))
         {
             AppliquerFiltre();
-            OnPropertyChanged(nameof(NombreTachesRestantes));
-            OnPropertyChanged(nameof(TitrePage));
+            RafraichirCompteurs();
         }
     }
 
@@ -147,6 +151,16 @@ public partial class TasksViewModel : ObservableObject
 
         var nouvelle = new ObservableCollection<Tache>(query.OrderBy(t => t.EstFaite).ThenByDescending(t => t.DateCreation));
         TachesVisibles = nouvelle;
+
+        RafraichirCompteurs();
+    }
+
+    private void RafraichirCompteurs()
+    {
+        OnPropertyChanged(nameof(TotalTachesVisibles));
+        OnPropertyChanged(nameof(NombreTachesRestantes));
+        OnPropertyChanged(nameof(NombreTachesFaites));
+        OnPropertyChanged(nameof(TitrePage));
     }
 
     [RelayCommand]

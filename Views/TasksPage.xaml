@@ -22,12 +22,18 @@
                 FontSize="22"
                 FontAttributes="Bold"
                 VerticalTextAlignment="Center" />
-            <Label
-                Grid.Column="1"
-                VerticalTextAlignment="Center"
-                Text="{Binding NombreTachesRestantes, StringFormat='{0} restante(s)'}"
-                TextColor="{AppThemeBinding Light=#334155, Dark=#94A3B8}"
-                FontSize="12" />
+            <VerticalStackLayout Grid.Column="1" Spacing="4" HorizontalOptions="End">
+                <Label
+                    Text="{Binding NombreTachesRestantes, StringFormat='⏳ {0} restantes'}"
+                    TextColor="{AppThemeBinding Light=#0D9488, Dark=#34D399}"
+                    FontSize="12"
+                    HorizontalTextAlignment="End" />
+                <Label
+                    Text="{Binding NombreTachesFaites, StringFormat='✅ {0} faites'}"
+                    TextColor="{AppThemeBinding Light=#2563EB, Dark=#60A5FA}"
+                    FontSize="12"
+                    HorizontalTextAlignment="End" />
+            </VerticalStackLayout>
         </Grid>
 
         <VerticalStackLayout Grid.Row="1" Spacing="12">
