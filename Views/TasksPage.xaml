@@ -117,6 +117,11 @@
                         </SwipeView.RightItems>
 
                         <Border StrokeThickness="0" BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#0F172A}" Margin="0,0,0,10">
+                            <Border.Triggers>
+                                <DataTrigger TargetType="Border" Binding="{Binding EstFaite}" Value="True">
+                                    <Setter Property="Opacity" Value="0.7" />
+                                </DataTrigger>
+                            </Border.Triggers>
                             <Grid ColumnDefinitions="Auto,*,Auto" Padding="14" ColumnSpacing="12">
                                 <CheckBox
                                     Grid.Column="0"
@@ -124,7 +129,14 @@
                                     VerticalOptions="Center" />
 
                                 <VerticalStackLayout Grid.Column="1" Spacing="6">
-                                    <Label x:Name="TitreLabel" Text="{Binding Titre}" FontSize="16" />
+                                    <Label Text="{Binding Titre}" FontSize="16">
+                                        <Label.Triggers>
+                                            <DataTrigger TargetType="Label" Binding="{Binding EstFaite}" Value="True">
+                                                <Setter Property="TextColor" Value="{AppThemeBinding Light=#9CA3AF, Dark=#6B7280}" />
+                                                <Setter Property="TextDecorations" Value="Strikethrough" />
+                                            </DataTrigger>
+                                        </Label.Triggers>
+                                    </Label>
 
                                     <Border
                                         Padding="8,3"
@@ -155,13 +167,6 @@
                                         CommandParameter="{Binding .}" />
                                 </Grid.GestureRecognizers>
 
-                                <Grid.Triggers>
-                                    <DataTrigger TargetType="Grid" Binding="{Binding EstFaite}" Value="True">
-                                        <Setter TargetName="TitreLabel" Property="TextColor" Value="{AppThemeBinding Light=#9CA3AF, Dark=#6B7280}" />
-                                        <Setter TargetName="TitreLabel" Property="TextDecorations" Value="Strikethrough" />
-                                        <Setter Property="Opacity" Value="0.7" />
-                                    </DataTrigger>
-                                </Grid.Triggers>
                             </Grid>
                         </Border>
                     </SwipeView>
